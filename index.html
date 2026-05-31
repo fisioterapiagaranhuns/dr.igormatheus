@@ -3,1181 +3,315 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MultiCare — Sistema de Gestão</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<title>Dr. Igor Matheus | Fisioterapia de Alta Performance — Garanhuns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --forest:#1c5c34;--forest-mid:#2a7d48;--forest-light:#e8f4ed;
-  --gold:#b8965a;--ink:#0f1410;--ink2:#3a4038;--ink3:#7a8077;
-  --paper:#f7f8f5;--white:#fff;--line:#e4e6e0;
-  --red:#c0392b;--red-light:#fdecea;--blue:#1a5f8a;--blue-light:#e8f2f9;
-  --amber:#b8760a;--amber-light:#fef6e7;
-  --radius:10px;--shadow:0 2px 12px rgba(0,0,0,0.07);
-}
-html{font-size:15px}
-body{font-family:'Outfit',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ink: #0f1410; --ink2: #3a4038; --ink3: #7a8077;
+    --paper: #fafaf8; --forest: #1c5c34; --forest-mid: #2a7d48;
+    --gold: #b8965a; --white: #ffffff; --line: #e4e6e1;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: "Outfit", sans-serif; background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; line-height: 1; }
+  .page { max-width: 520px; margin: 0 auto; background: var(--white); box-shadow: 0 0 60px rgba(0,0,0,0.06); }
 
-/* ── LAYOUT ── */
-.app{display:flex;min-height:100vh}
-.sidebar{width:220px;background:var(--ink);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:200;transition:transform 0.3s}
-.main{margin-left:220px;flex:1;min-height:100vh;display:flex;flex-direction:column}
-.topbar{background:var(--white);border-bottom:1px solid var(--line);padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.content{padding:28px;flex:1}
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 32px; border-bottom: 1px solid var(--line); background: var(--white); position: sticky; top: 0; z-index: 100; }
+  .nav-name { font-family: "Playfair Display", serif; font-size: 16px; font-weight: 700; color: var(--ink); display: block; }
+  .nav-cred { font-size: 11px; color: var(--ink3); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-top: 2px; }
+  .nav-cta { display: inline-block; background: var(--forest-mid); color: var(--white); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 10px 18px; border-radius: 4px; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--forest); }
 
-/* ── SIDEBAR ── */
-.sb-logo{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.sb-logo-name{font-family:'Playfair Display',serif;font-size:15px;color:var(--white);display:block}
-.sb-logo-sub{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;display:block}
-.sb-nav{flex:1;padding:12px 0;overflow-y:auto}
-.sb-section{font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase;padding:16px 20px 6px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;color:rgba(255,255,255,0.55);font-size:13px;font-weight:500;transition:all 0.15s;border-left:3px solid transparent}
-.nav-item:hover{color:var(--white);background:rgba(255,255,255,0.05)}
-.nav-item.active{color:var(--white);border-left-color:var(--forest-mid);background:rgba(255,255,255,0.07)}
-.nav-item svg{width:16px;height:16px;flex-shrink:0;opacity:0.7}
-.nav-item.active svg,.nav-item:hover svg{opacity:1}
-.sb-bottom{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08)}
-.sb-avatar{width:34px;height:34px;border-radius:50%;background:var(--forest-mid);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--white);flex-shrink:0}
-.sb-user{display:flex;align-items:center;gap:10px}
-.sb-user-name{font-size:12px;color:var(--white);font-weight:500}
-.sb-user-role{font-size:10px;color:rgba(255,255,255,0.35)}
+  .hero { background: #0d1f14; padding: 64px 32px 52px; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 16px; display: block; }
+  .hero-h1 { font-family: "Playfair Display", serif; font-size: 36px; line-height: 1.1; font-weight: 700; color: var(--white); margin-bottom: 18px; letter-spacing: -0.01em; }
+  .hero-h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.62); font-weight: 300; margin-bottom: 36px; }
+  .hero-sub strong { color: rgba(255,255,255,0.9); font-weight: 400; }
 
-/* ── TOPBAR ── */
-.topbar-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink)}
-.topbar-right{display:flex;align-items:center;gap:12px}
-.topbar-date{font-size:12px;color:var(--ink3)}
-.btn-menu{display:none;background:none;border:none;cursor:pointer;padding:4px}
-.logout-btn{background:none;border:1px solid var(--line);border-radius:6px;padding:6px 12px;font-size:12px;color:var(--ink3);cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.15s}
-.logout-btn:hover{border-color:var(--red);color:var(--red)}
+  .btn-primary { display: block; width: 100%; background: var(--forest-mid); color: var(--white); font-family: "Outfit", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.03em; text-align: center; padding: 18px 24px; border-radius: 5px; border: none; cursor: pointer; text-decoration: none; margin-bottom: 10px; transition: background 0.2s; line-height: 1; }
+  .btn-primary:hover { background: var(--forest); }
+  .btn-outline { display: block; width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.28); color: rgba(255,255,255,0.72); font-size: 14px; text-align: center; padding: 15px 24px; border-radius: 5px; cursor: pointer; text-decoration: none; transition: border-color 0.2s; line-height: 1; }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.5); color: rgba(255,255,255,0.9); }
 
-/* ── CARDS ── */
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
-.card{background:var(--white);border-radius:var(--radius);border:1px solid var(--line);padding:20px;box-shadow:var(--shadow)}
-.card-title{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
-.card-val{font-family:'Playfair Display',serif;font-size:28px;color:var(--ink);line-height:1}
-.card-sub{font-size:12px;color:var(--ink3);margin-top:4px}
-.card-accent{border-left:3px solid var(--forest-mid)}
-.card-accent-gold{border-left:3px solid var(--gold)}
-.card-accent-red{border-left:3px solid var(--red)}
-.card-accent-blue{border-left:3px solid var(--blue)}
+  .creds { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .cred-cell { background: var(--white); padding: 24px 20px; text-align: center; }
+  .cred-val { font-family: "Playfair Display", serif; font-size: 26px; font-weight: 700; color: var(--forest); display: block; line-height: 1; min-height: 32px; }
+  .cred-label { font-size: 11px; color: var(--ink3); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 7px; display: block; line-height: 1.4; }
 
-/* ── SECTION HEADER ── */
-.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
-.sec-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink)}
-.sec-sub{font-size:12px;color:var(--ink3);margin-top:2px}
+  .sec { padding: 60px 32px; }
+  .sec-gray { background: var(--paper); }
+  .sec-tag { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--forest-mid); font-weight: 500; display: block; margin-bottom: 10px; }
+  .sec-h2 { font-family: "Playfair Display", serif; font-size: 28px; font-weight: 700; line-height: 1.2; color: var(--ink); letter-spacing: -0.01em; }
+  .sec-h2 em { font-style: italic; color: var(--forest); }
+  .divider { width: 32px; height: 2px; background: var(--forest-mid); border-radius: 2px; margin: 20px 0; }
+  .sec-lead { font-size: 15px; line-height: 1.75; color: var(--ink2); font-weight: 300; }
 
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all 0.15s;text-decoration:none;white-space:nowrap;font-family:'Outfit',sans-serif}
-.btn-green{background:var(--forest-mid);color:var(--white)}
-.btn-green:hover{background:var(--forest)}
-.btn-outline{background:transparent;border:1px solid var(--line);color:var(--ink2)}
-.btn-outline:hover{border-color:var(--ink3)}
-.btn-wa{background:#25D366;color:var(--white)}
-.btn-wa:hover{background:#1da851}
-.btn-sm{padding:6px 12px;font-size:12px}
-.btn-red{background:var(--red);color:var(--white)}
-.btn-blue{background:var(--blue);color:var(--white)}
+  .pain-list { margin-top: 32px; }
+  .pain-item { display: flex; gap: 18px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .pain-item:last-child { border-bottom: none; }
+  .pain-n { font-family: "Playfair Display", serif; font-size: 18px; font-weight: 700; color: var(--forest-mid); min-width: 24px; padding-top: 1px; flex-shrink: 0; }
+  .pain-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+  .pain-desc { font-size: 13px; color: var(--ink3); line-height: 1.6; font-weight: 300; }
 
-/* ── TABLE ── */
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;padding:10px 14px;font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:0.07em;border-bottom:1px solid var(--line);font-weight:500}
-td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--paper)}
+  .steps { margin-top: 36px; display: flex; flex-direction: column; gap: 28px; }
+  .step { display: flex; gap: 18px; align-items: flex-start; }
+  .step-n { width: 40px; height: 40px; min-width: 40px; border-radius: 50%; border: 1.5px solid var(--forest-mid); display: flex; align-items: center; justify-content: center; font-family: "Playfair Display", serif; font-weight: 700; font-size: 13px; color: var(--forest-mid); flex-shrink: 0; }
+  .step-title { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 5px; line-height: 1.3; }
+  .step-desc { font-size: 13px; color: var(--ink2); line-height: 1.65; font-weight: 300; }
 
-/* ── BADGES ── */
-.badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:500}
-.badge-green{background:var(--forest-light);color:var(--forest)}
-.badge-amber{background:var(--amber-light);color:var(--amber)}
-.badge-red{background:var(--red-light);color:var(--red)}
-.badge-blue{background:var(--blue-light);color:var(--blue)}
-.badge-gray{background:#f0f0ee;color:var(--ink3)}
+  .about-row { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+  .about-photo { width: 100px; height: 120px; min-width: 100px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); flex-shrink: 0; }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+  .about-name { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; color: var(--ink); display: block; margin-bottom: 3px; }
+  .about-role { font-size: 12px; color: var(--forest-mid); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 10px; }
+  .about-bio { font-size: 13px; line-height: 1.7; color: var(--ink2); font-weight: 300; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .tag { font-size: 12px; padding: 6px 14px; border-radius: 100px; border: 1px solid var(--forest-mid); color: var(--forest); font-weight: 500; }
 
-/* ── FORM ── */
-.form-group{margin-bottom:16px}
-.form-label{display:block;font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:5px}
-.form-control{width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:6px;font-size:13px;font-family:'Outfit',sans-serif;color:var(--ink);background:var(--white);transition:border-color 0.15s;outline:none}
-.form-control:focus{border-color:var(--forest-mid)}
-select.form-control{cursor:pointer}
-textarea.form-control{resize:vertical;min-height:80px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .test-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .test-card { border: 1px solid var(--line); border-radius: 8px; padding: 24px; }
+  .stars { font-size: 12px; color: var(--gold); letter-spacing: 3px; margin-bottom: 12px; }
+  .test-text { font-family: "Playfair Display", serif; font-size: 15px; font-style: italic; line-height: 1.65; color: var(--ink); margin-bottom: 18px; }
+  .test-sep { width: 28px; height: 1px; background: var(--line); margin-bottom: 14px; }
+  .test-name { font-size: 13px; font-weight: 600; color: var(--ink); display: block; }
+  .test-loc { font-size: 12px; color: var(--ink3); display: block; margin-top: 2px; }
 
-/* ── MODAL ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.open{display:flex}
-.modal{background:var(--white);border-radius:14px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
-.modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--white);z-index:2}
-.modal-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink)}
-.modal-close{background:none;border:none;cursor:pointer;font-size:22px;color:var(--ink3);line-height:1;padding:2px 6px}
-.modal-body{padding:24px}
-.modal-foot{padding:16px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+  .cta-final { background: var(--forest); padding: 60px 32px; text-align: center; }
+  .cta-h2 { font-family: "Playfair Display", serif; font-size: 28px; font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 14px; }
+  .cta-sub { font-size: 15px; color: rgba(255,255,255,0.62); font-weight: 300; line-height: 1.7; margin-bottom: 36px; }
+  .btn-cta { display: block; background: var(--white); color: var(--forest); font-family: "Outfit", sans-serif; font-weight: 700; font-size: 15px; text-align: center; padding: 20px 28px; border-radius: 5px; text-decoration: none; margin-bottom: 16px; transition: opacity 0.2s; }
+  .btn-cta:hover { opacity: 0.92; }
+  .cta-note { font-size: 13px; color: rgba(255,255,255,0.42); }
 
-/* ── AGENDA ── */
-.agenda-grid{display:grid;grid-template-columns:70px repeat(6,1fr);gap:1px;background:var(--line);border-radius:var(--radius);overflow:hidden}
-.ag-head{background:var(--white);padding:10px 6px;text-align:center;font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.06em}
-.ag-head.today{background:var(--forest-light);color:var(--forest)}
-.ag-time{background:var(--paper);padding:8px 8px;font-size:11px;color:var(--ink3);text-align:right}
-.ag-slot{background:var(--white);min-height:48px;padding:3px;cursor:pointer;transition:background 0.15s}
-.ag-slot:hover{background:var(--forest-light)}
-.ag-slot.today-col{background:#fafff8}
-.ag-event{border-left:3px solid var(--forest-mid);background:var(--forest-light);border-radius:4px;padding:3px 5px;font-size:11px;color:var(--forest);font-weight:500;line-height:1.3;margin-bottom:2px}
-.ag-event-red{border-left-color:var(--red);background:var(--red-light);color:var(--red)}
-.ag-event-blue{border-left-color:var(--blue);background:var(--blue-light);color:var(--blue)}
-.ag-event-amber{border-left-color:var(--amber);background:var(--amber-light);color:var(--amber)}
+  .footer { padding: 30px 32px; border-top: 1px solid var(--line); text-align: center; }
+  .footer-name { font-family: "Playfair Display", serif; font-size: 14px; color: var(--ink3); display: block; margin-bottom: 4px; }
+  .footer-ig { font-size: 12px; color: var(--forest-mid); font-weight: 500; text-decoration: none; }
 
-/* ── PATIENT ROW ── */
-.p-avatar{width:36px;height:36px;border-radius:50%;background:var(--forest-light);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--forest);flex-shrink:0}
+  @media (max-width: 420px) {
+    .hero { padding: 48px 24px 44px; }
+    .hero-h1 { font-size: 30px; }
+    .sec { padding: 48px 24px; }
+    .nav { padding: 18px 24px; }
+    .cta-final { padding: 48px 24px; }
+  }
 
-/* ── TABS ── */
-.tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
-.tab{padding:10px 18px;font-size:13px;font-weight:500;color:var(--ink3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.15s;white-space:nowrap}
-.tab.active{color:var(--forest-mid);border-bottom-color:var(--forest-mid)}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
+  /* PULSE — botão principal agendar */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(42,125,72,0.55); }
+    70%  { box-shadow: 0 0 0 12px rgba(42,125,72,0); }
+    100% { box-shadow: 0 0 0 0 rgba(42,125,72,0); }
+  }
+  .btn-primary {
+    animation: pulse-green 2s infinite;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn-primary:hover { animation: none; }
 
-/* ── RELATÓRIO ── */
-.rel-stat{display:flex;flex-direction:column;align-items:center;padding:20px;text-align:center}
-.rel-val{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--forest);line-height:1}
-.rel-label{font-size:12px;color:var(--ink3);margin-top:6px;text-transform:uppercase;letter-spacing:0.06em}
-.progress-bar{height:8px;background:var(--line);border-radius:100px;overflow:hidden;margin-top:6px}
-.progress-fill{height:100%;background:var(--forest-mid);border-radius:100px;transition:width 0.6s ease}
-.chart-bar-wrap{display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:10px}
-.chart-bar{flex:1;background:var(--forest-light);border-radius:4px 4px 0 0;position:relative;transition:height 0.5s ease;cursor:pointer;min-width:20px}
-.chart-bar:hover{background:var(--forest-mid)}
-.chart-bar span{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--ink3);white-space:nowrap}
-.chart-bar .bar-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;color:var(--forest);white-space:nowrap}
+  /* SHAKE + GLOW — botão CTA final */
+  @keyframes glow-pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.35); }
+    50%      { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+  }
+  .btn-cta {
+    animation: glow-pulse 2.2s infinite;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn-cta:hover { animation: none; }
 
-/* ── LOADING ── */
-.loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--ink3);font-size:13px;gap:10px}
-.spin{width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--forest-mid);border-radius:50%;animation:spin 0.7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+  /* NAV CTA — ícone WhatsApp */
+  .nav-cta { display: inline-flex; align-items: center; gap: 7px; }
 
-/* ── TOAST ── */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--white);padding:12px 24px;border-radius:8px;font-size:13px;z-index:999;transition:transform 0.3s;box-shadow:0 8px 24px rgba(0,0,0,0.2)}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.toast.success{background:var(--forest-mid)}
-.toast.error{background:var(--red)}
+  /* TAGS — clicáveis */
+  .tag {
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, border-color 0.18s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .tag:hover {
+    background: var(--forest-mid);
+    color: var(--white);
+    border-color: var(--forest-mid);
+  }
 
-/* ── LINK BOX ── */
-.link-box{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:12px;word-break:break-all}
-.link-box span{flex:1;color:var(--forest-mid);font-weight:500}
-
-/* ── PAGES ── */
-.page{display:none}
-.page.active{display:block}
-
-/* ── MOBILE ── */
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0}
-  .grid-4{grid-template-columns:1fr 1fr}
-  .grid-3{grid-template-columns:1fr 1fr}
-  .grid-2{grid-template-columns:1fr}
-  .form-row,.form-row-3{grid-template-columns:1fr}
-  .btn-menu{display:block}
-  .content{padding:16px}
-  .agenda-grid{grid-template-columns:55px repeat(3,1fr)}
-  .ag-col-hide{display:none}
-  .topbar{padding:0 16px}
-  .topbar-date{display:none}
-}
-@media(max-width:480px){
-  .grid-4,.grid-3{grid-template-columns:1fr}
-}
-.overlay-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150}
-.overlay-bg.open{display:block}
-
-/* ── LOGIN ── */
-.login-screen{
-  display:flex;align-items:center;justify-content:center;
-  min-height:100vh;background:var(--forest);padding:20px;
-  position:fixed;inset:0;z-index:1000;
-}
-.login-bg-c{position:absolute;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none}
-.login-c1{width:500px;height:500px;top:-120px;right:-100px}
-.login-c2{width:300px;height:300px;bottom:-80px;left:-60px}
-.login-card{background:var(--white);border-radius:20px;width:100%;max-width:420px;padding:44px;box-shadow:0 32px 80px rgba(0,0,0,0.25);position:relative;z-index:2}
-.login-logo-icon{width:60px;height:60px;border-radius:14px;background:var(--forest-mid);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
-.login-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);text-align:center;display:block}
-.login-sub-text{font-size:11px;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;text-align:center;display:block;margin-bottom:32px;margin-top:3px}
-.login-title{font-family:'Playfair Display',serif;font-size:19px;color:var(--ink);margin-bottom:4px}
-.login-hint{font-size:13px;color:var(--ink3);margin-bottom:24px}
-.input-wrap{position:relative}
-.eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink3);display:flex;align-items:center}
-.eye-btn:hover{color:var(--ink)}
-.has-eye{padding-right:40px}
-.login-error{background:var(--red-light);border:1px solid #f5c6c6;border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:16px;display:none;align-items:center;gap:8px}
-.login-error.show{display:flex}
-.forgot-link{font-size:12px;color:var(--forest-mid);text-decoration:none;font-weight:500;display:block;text-align:right;margin-top:-8px;margin-bottom:20px}
-.forgot-link:hover{text-decoration:underline}
-.quick-users{display:flex;flex-direction:column;gap:8px;margin-top:16px}
-.quick-user{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper);cursor:pointer;transition:all 0.15s;width:100%;text-align:left}
-.quick-user:hover{border-color:var(--forest-mid);background:var(--forest-light)}
-.qu-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--white);flex-shrink:0}
-.divider-or{display:flex;align-items:center;gap:12px;margin:20px 0}
-.divider-or::before,.divider-or::after{content:'';flex:1;height:1px;background:var(--line)}
-.divider-or span{font-size:12px;color:var(--ink3)}
-.back-link{background:none;border:none;color:var(--forest-mid);font-size:13px;font-weight:500;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:4px;margin-bottom:20px;padding:0}
-.back-link:hover{text-decoration:underline}
-.forgot-panel{display:none}
-.forgot-panel.show{display:block}
-.login-main-panel{display:block}
-.login-main-panel.hide{display:none}
-@keyframes shake{0%,100%{transform:translateX(0)}25%,75%{transform:translateX(-6px)}50%{transform:translateX(6px)}}
+  /* FLOATING BUTTONS */
+  .float-btns {
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 999;
+  }
+  .float-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.2s, opacity 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+  }
+  .float-btn:hover { transform: scale(1.1); }
+  .float-btn-wa  { background: #25D366; }
+  .float-btn svg { width: 26px; height: 26px; fill: white; }
 </style>
 </head>
 <body>
+<div class="page">
 
-<!-- ══ LOGIN SCREEN ══ -->
-<div class="login-screen" id="loginScreen">
-  <div class="login-bg-c login-c1"></div>
-  <div class="login-bg-c login-c2"></div>
-  <div class="login-card" id="loginCard">
-
-    <div class="login-logo-icon">
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+  <nav class="nav">
+    <div>
+      <span class="nav-name">Dr. Igor Matheus</span>
+      <span class="nav-cred">Fisioterapia &amp; Reabilitação</span>
     </div>
-    <span class="login-name">MultiCare</span>
-    <span class="login-sub-text">Fisioterapia &amp; Reabilitação</span>
+    <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" class="nav-cta"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:white;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Agendar →</a>
+  </nav>
 
-    <!-- MAIN PANEL -->
-    <div class="login-main-panel" id="loginMainPanel">
-      <div class="login-title">Bem-vindo de volta</div>
-      <div class="login-hint">Acesse o sistema de gestão</div>
+  <section class="hero">
+    <span class="hero-eyebrow">Fisioterapia de Alta Performance</span>
+    <h1 class="hero-h1">Você não tem que conviver com a <em>dor</em> para sempre.</h1>
+    <p class="hero-sub">Tratamento individualizado que devolve sua rotina, sua força e o controle da sua vida — <strong>em Garanhuns.</strong></p>
+    <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" class="btn-primary"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:white;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Agendar minha avaliação →</a>
+    <a href="#metodo" class="btn-outline">Conhecer o método</a>
+  </section>
 
-      <div class="login-error" id="loginError">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span id="loginErrorTxt">E-mail ou senha incorretos.</span>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input class="form-control" id="loginEmail" type="email" placeholder="seu@email.com" autocomplete="email"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Senha</label>
-        <div class="input-wrap">
-          <input class="form-control has-eye" id="loginSenha" type="password" placeholder="••••••••" autocomplete="current-password"/>
-          <button class="eye-btn" type="button" onclick="toggleEye('loginSenha','eyeLogin')">
-            <svg id="eyeLogin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-      </div>
-      <a href="#" class="forgot-link" onclick="showForgot();return false">Esqueci minha senha</a>
-      <button class="btn btn-green" style="width:100%;justify-content:center;padding:13px" id="btnLogin" onclick="doLogin()">
-        <div class="spin" id="loginSpin" style="display:none;border-color:rgba(255,255,255,0.3);border-top-color:white"></div>
-        <span id="loginBtnTxt">Entrar no sistema</span>
-      </button>
-      <div class="divider-or"><span>Acesso rápido</span></div>
-      <div class="quick-users">
-        <button class="quick-user" onclick="quickLogin('igor@multicare.com.br','igor2024')">
-          <div class="qu-av" style="background:var(--forest-mid)">IM</div>
-          <div><div style="font-size:13px;font-weight:500;color:var(--ink)">Dr. Igor Matheus</div><div style="font-size:11px;color:var(--ink3)">Fisioterapeuta</div></div>
-          <svg style="margin-left:auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        <button class="quick-user" onclick="quickLogin('gestora@multicare.com.br','gestora2024')">
-          <div class="qu-av" style="background:var(--gold)">GE</div>
-          <div><div style="font-size:13px;font-weight:500;color:var(--ink)">Gestora</div><div style="font-size:11px;color:var(--ink3)">Administração</div></div>
-          <svg style="margin-left:auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
+  <div class="creds" id="creds-section">
+    <div class="cred-cell">
+      <span class="cred-val"><span style="font-size:20px">+</span><span class="counter" data-target="500" data-duration="1800">0</span></span>
+      <span class="cred-label">Pacientes atendidos</span>
     </div>
-
-    <!-- FORGOT PANEL -->
-    <div class="forgot-panel" id="forgotPanel">
-      <button class="back-link" onclick="hideForgot()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        Voltar
-      </button>
-      <div class="login-title">Recuperar senha</div>
-      <div class="login-hint" style="margin-bottom:20px">Enviaremos instruções para seu e-mail.</div>
-      <div id="forgotSuccess" style="display:none;background:var(--forest-light);border:1px solid #a8d8b9;border-radius:8px;padding:12px;font-size:13px;color:var(--forest);margin-bottom:16px">✅ Instruções enviadas! Verifique sua caixa de entrada.</div>
-      <div id="forgotForm">
-        <div class="form-group"><label class="form-label">E-mail cadastrado</label><input class="form-control" id="forgotEmail" type="email" placeholder="seu@email.com"/></div>
-        <button class="btn btn-green" style="width:100%;justify-content:center" onclick="sendForgot()">Enviar instruções</button>
-      </div>
+    <div class="cred-cell">
+      <span class="cred-val"><span class="counter" data-target="100" data-duration="1400">0</span><span style="font-size:20px">%</span></span>
+      <span class="cred-label">Atendimento individual</span>
     </div>
-
-    <div style="text-align:center;margin-top:24px;font-size:11px;color:var(--ink3)">MultiCare Fisioterapia · Garanhuns, PE</div>
-  </div>
-</div>
-
-<!-- ══ OVERLAY MOBILE ══ -->
-<div class="overlay-bg" id="overlayBg" onclick="closeSidebar()"></div>
-
-<!-- ══ APP ══ -->
-<div class="app" id="appScreen" style="display:none">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sb-logo">
-      <span class="sb-logo-name">MultiCare</span>
-      <span class="sb-logo-sub">Fisioterapia &amp; Reabilitação</span>
+    <div class="cred-cell">
+      <span class="cred-val" style="font-size:18px;line-height:1.2">Clínica<br>Própria</span>
+      <span class="cred-label">Em Garanhuns</span>
     </div>
-    <nav class="sb-nav">
-      <div class="sb-section">Principal</div>
-      <div class="nav-item active" onclick="goTo('dashboard')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</div>
-      <div class="nav-item" onclick="goTo('agenda')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Agenda</div>
-      <div class="nav-item" onclick="goTo('pacientes')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Pacientes</div>
-      <div class="sb-section">Financeiro</div>
-      <div class="nav-item" onclick="goTo('financeiro')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Financeiro</div>
-      <div class="sb-section">Relatórios</div>
-      <div class="nav-item" onclick="goTo('relatorios')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Relatórios</div>
-      <div class="sb-section">Comunicação</div>
-      <div class="nav-item" onclick="goTo('lembretes')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Lembretes &amp; Msg</div>
-      <div class="nav-item" onclick="goTo('aniversariantes')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Aniversariantes</div>
-      <div class="nav-item" onclick="goTo('link-paciente')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Link do Paciente</div>
-    </nav>
-    <div class="sb-bottom">
-      <div class="sb-user">
-        <div class="sb-avatar" id="sbAvatar">IM</div>
-        <div><div class="sb-user-name" id="sbName">Dr. Igor</div><div class="sb-user-role" id="sbRole">Fisioterapeuta</div></div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <div class="main">
-    <header class="topbar">
-      <div style="display:flex;align-items:center;gap:14px">
-        <button class="btn-menu" onclick="toggleSidebar()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-        <span class="topbar-title" id="pageTitle">Dashboard</span>
-      </div>
-      <div class="topbar-right">
-        <span class="topbar-date" id="todayDate"></span>
-        <button class="btn btn-green btn-sm" onclick="openModal('modalAgendar')">+ Agendar</button>
-        <button class="logout-btn" onclick="doLogout()">Sair</button>
-      </div>
-    </header>
-
-    <div class="content">
-
-      <!-- ══ DASHBOARD ══ -->
-      <div class="page active" id="page-dashboard">
-        <div class="grid-4">
-          <div class="card card-accent"><div class="card-title">Consultas Hoje</div><div class="card-val" id="dConsultasHoje">—</div><div class="card-sub">sessões agendadas</div></div>
-          <div class="card card-accent-gold"><div class="card-title">Receita do Mês</div><div class="card-val" id="dReceita">—</div><div class="card-sub">valores recebidos</div></div>
-          <div class="card card-accent-blue"><div class="card-title">Total Pacientes</div><div class="card-val" id="dPacientes">—</div><div class="card-sub">cadastrados</div></div>
-          <div class="card card-accent-red"><div class="card-title">Faltas s/ Aviso</div><div class="card-val" id="dFaltas">—</div><div class="card-sub">este mês</div></div>
-        </div>
-        <div class="grid-2">
-          <div class="card">
-            <div class="sec-head"><div><div class="sec-title">Próximas Sessões</div><div class="sec-sub">Hoje e amanhã</div></div><button class="btn btn-outline btn-sm" onclick="goTo('agenda')">Ver agenda</button></div>
-            <div id="dProximas"><div class="loading"><div class="spin"></div>Carregando...</div></div>
-          </div>
-          <div class="card">
-            <div class="sec-head"><div><div class="sec-title">Lembretes 24h</div><div class="sec-sub">Sessões de amanhã</div></div></div>
-            <div id="dLembretes"><div class="loading"><div class="spin"></div>Carregando...</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="sec-head"><div class="sec-title">Aniversariantes do Mês</div></div>
-          <div id="dAniversariantes"><div class="loading"><div class="spin"></div>Carregando...</div></div>
-        </div>
-      </div>
-
-      <!-- ══ AGENDA ══ -->
-      <div class="page" id="page-agenda">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-          <div style="display:flex;gap:8px;align-items:center">
-            <button class="btn btn-outline btn-sm" onclick="weekChange(-1)">‹ Anterior</button>
-            <span style="font-size:13px;font-weight:500" id="weekLabel"></span>
-            <button class="btn btn-outline btn-sm" onclick="weekChange(1)">Próxima ›</button>
-          </div>
-          <button class="btn btn-green btn-sm" onclick="openModal('modalAgendar')">+ Novo Agendamento</button>
-        </div>
-        <div class="card" style="padding:0;overflow:hidden">
-          <div id="agendaGrid" class="agenda-grid"></div>
-        </div>
-      </div>
-
-      <!-- ══ PACIENTES ══ -->
-      <div class="page" id="page-pacientes">
-        <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap">
-          <input class="form-control" style="max-width:300px" placeholder="Buscar por nome ou telefone..." oninput="filtrarPacientes(this.value)" id="searchP"/>
-          <button class="btn btn-green" onclick="openModal('modalPaciente')">+ Novo Paciente</button>
-        </div>
-        <div class="card">
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Paciente</th><th>WhatsApp</th><th>Nascimento</th><th>Convênio</th><th>Próx. Sessão</th><th>Ações</th></tr></thead>
-              <tbody id="tblPacientes"><tr><td colspan="6"><div class="loading"><div class="spin"></div>Carregando...</div></td></tr></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- ══ FINANCEIRO ══ -->
-      <div class="page" id="page-financeiro">
-        <div class="grid-3">
-          <div class="card card-accent"><div class="card-title">Recebido no Mês</div><div class="card-val" style="color:var(--forest)" id="fRecebido">R$ 0,00</div></div>
-          <div class="card card-accent-red"><div class="card-title">A Receber</div><div class="card-val" style="color:var(--red)" id="fAReceber">R$ 0,00</div></div>
-          <div class="card card-accent-gold"><div class="card-title">Faltas Cobradas</div><div class="card-val" id="fFaltas">R$ 0,00</div></div>
-        </div>
-        <div class="grid-2">
-          <div class="card">
-            <div class="sec-head"><div class="sec-title">Lançamentos</div><button class="btn btn-green btn-sm" onclick="openModal('modalLancamento')">+ Lançar</button></div>
-            <div id="listaLancamentos"><div class="loading"><div class="spin"></div>Carregando...</div></div>
-          </div>
-          <div class="card">
-            <div class="sec-title" style="margin-bottom:16px">Enviar Dados de Pagamento</div>
-            <div class="form-group"><label class="form-label">Chave PIX</label><input class="form-control" id="chavePix" value="(87) 9.9922-1295"/></div>
-            <div class="form-group"><label class="form-label">Mensagem</label><textarea class="form-control" id="msgPix" rows="3">Olá! Seguem os dados para pagamento da sua sessão. Chave PIX: (87) 9.9922-1295 — Dr. Igor Matheus | MultiCare Fisioterapia. Obrigado!</textarea></div>
-            <div class="form-group"><label class="form-label">Paciente</label><select class="form-control" id="selPacientePix"><option value="">— Selecione —</option></select></div>
-            <button class="btn btn-wa" onclick="enviarPix()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enviar via WhatsApp</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ══ RELATÓRIOS ══ -->
-      <div class="page" id="page-relatorios">
-        <div class="tabs">
-          <div class="tab active" onclick="switchTab(this,'relGeral')">Geral</div>
-          <div class="tab" onclick="switchTab(this,'relPacientes')">Pacientes</div>
-          <div class="tab" onclick="switchTab(this,'relAgendamentos')">Agendamentos</div>
-          <div class="tab" onclick="switchTab(this,'relFinanceiro')">Financeiro</div>
-        </div>
-
-        <div class="tab-panel active" id="relGeral">
-          <div class="grid-4" style="margin-bottom:24px">
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relTotalPac">0</div><div class="rel-label">Total Pacientes</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relTotalAg">0</div><div class="rel-label">Total Sessões</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relTotalRec" style="color:var(--forest)">R$0</div><div class="rel-label">Total Recebido</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relTaxaComp" style="color:var(--blue)">0%</div><div class="rel-label">Taxa Comparecimento</div></div></div>
-          </div>
-          <div class="grid-2">
-            <div class="card">
-              <div class="sec-title" style="margin-bottom:16px">Sessões por Tipo</div>
-              <div id="relTipos"></div>
-            </div>
-            <div class="card">
-              <div class="sec-title" style="margin-bottom:16px">Status dos Agendamentos</div>
-              <div id="relStatus"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="relPacientes">
-          <div class="grid-3" style="margin-bottom:24px">
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relPacAtivos">0</div><div class="rel-label">Pacientes Ativos</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relPacMes">0</div><div class="rel-label">Novos este Mês</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relPacAniv">0</div><div class="rel-label">Aniversariantes</div></div></div>
-          </div>
-          <div class="card">
-            <div class="sec-head"><div class="sec-title">Lista Completa de Pacientes</div>
-              <div style="display:flex;gap:8px">
-                <input class="form-control btn-sm" id="relBuscaPac" placeholder="Buscar..." oninput="renderRelPacientes()" style="max-width:200px"/>
-              </div>
-            </div>
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>Nome</th><th>Telefone</th><th>Nascimento</th><th>Convênio</th><th>Total Sessões</th><th>Último Atend.</th></tr></thead>
-                <tbody id="relTblPac"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="relAgendamentos">
-          <div class="grid-3" style="margin-bottom:24px">
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relAgMes">0</div><div class="rel-label">Sessões este Mês</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relAgFaltas">0</div><div class="rel-label">Faltas s/ Aviso</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relAgRemarcacoes">0</div><div class="rel-label">Remarcações</div></div></div>
-          </div>
-          <div class="card">
-            <div class="sec-head">
-              <div class="sec-title">Todos os Agendamentos</div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap">
-                <select class="form-control btn-sm" id="relFiltroStatus" onchange="renderRelAgendamentos()" style="max-width:150px"><option value="">Todos os status</option><option>Confirmado</option><option>Pendente</option><option>Cancelado</option><option>Remarcado</option></select>
-                <input class="form-control btn-sm" id="relFiltroMes" type="month" onchange="renderRelAgendamentos()" style="max-width:150px"/>
-              </div>
-            </div>
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>Paciente</th><th>Data</th><th>Hora</th><th>Tipo</th><th>Status</th><th>Valor</th></tr></thead>
-                <tbody id="relTblAg"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="relFinanceiro">
-          <div class="grid-4" style="margin-bottom:24px">
-            <div class="card"><div class="rel-stat"><div class="rel-val" style="color:var(--forest)" id="relFinRec">R$0</div><div class="rel-label">Total Recebido</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" style="color:var(--red)" id="relFinPend">R$0</div><div class="rel-label">A Receber</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" id="relFinFalta">R$0</div><div class="rel-label">Faltas Cobradas</div></div></div>
-            <div class="card"><div class="rel-stat"><div class="rel-val" style="color:var(--blue)" id="relFinTotal">R$0</div><div class="rel-label">Faturamento Total</div></div></div>
-          </div>
-          <div class="card">
-            <div class="sec-head">
-              <div class="sec-title">Extrato de Lançamentos</div>
-              <select class="form-control btn-sm" id="relFiltroLan" onchange="renderRelFinanceiro()" style="max-width:160px"><option value="">Todos</option><option>Recebido</option><option>A Receber</option><option>Falta Cobrada</option></select>
-            </div>
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>Data</th><th>Paciente</th><th>Tipo</th><th>Descrição</th><th>Valor</th></tr></thead>
-                <tbody id="relTblLan"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ══ LEMBRETES ══ -->
-      <div class="page" id="page-lembretes">
-        <div class="grid-2">
-          <div class="card">
-            <div class="sec-title" style="margin-bottom:6px">Lembretes Automáticos 24h</div>
-            <p style="font-size:13px;color:var(--ink3);line-height:1.65;margin-bottom:16px">Sessões de amanhã — clique para enviar lembrete via WhatsApp.</p>
-            <div id="lista24h"><div class="loading"><div class="spin"></div>Carregando...</div></div>
-          </div>
-          <div class="card">
-            <div class="sec-title" style="margin-bottom:16px">Mensagens Especiais</div>
-            <div class="tabs">
-              <div class="tab active" onclick="switchTab(this,'tabNatal')">Natal/Ano Novo</div>
-              <div class="tab" onclick="switchTab(this,'tabFalta')">Política de Falta</div>
-            </div>
-            <div class="tab-panel active" id="tabNatal">
-              <div class="form-group"><label class="form-label">Mensagem de Natal</label><textarea class="form-control" id="msgNatal" rows="3">🎄 Feliz Natal! Dr. Igor e a equipe MultiCare desejam que este Natal seja repleto de saúde, paz e alegria. Conte sempre com a gente! 💚</textarea></div>
-              <div class="form-group"><label class="form-label">Mensagem de Ano Novo</label><textarea class="form-control" id="msgAnoNovo" rows="3">🎆 Feliz Ano Novo! Que 2026 traga muita saúde e qualidade de vida. Dr. Igor e a equipe MultiCare estão aqui por você! 💚</textarea></div>
-              <button class="btn btn-wa" onclick="enviarParaTodos('natal')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enviar para todos</button>
-            </div>
-            <div class="tab-panel" id="tabFalta">
-              <div class="form-group"><label class="form-label">Mensagem de Falta</label><textarea class="form-control" id="msgFalta" rows="4">Olá! Notamos sua ausência na sessão de hoje sem aviso prévio. Conforme nossa política, cancelamentos com menos de 24h ou sem aviso implicam cobrança da sessão. Para reagendar: Dr. Igor Matheus — MultiCare Fisioterapia.</textarea></div>
-              <div class="form-group"><label class="form-label">Paciente</label><select class="form-control" id="selFalta"><option value="">— Selecione —</option></select></div>
-              <button class="btn btn-wa" onclick="enviarFalta()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enviar via WhatsApp</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ══ ANIVERSARIANTES ══ -->
-      <div class="page" id="page-aniversariantes">
-        <div class="card">
-          <div class="sec-head"><div><div class="sec-title">Aniversariantes do Mês</div><div class="sec-sub" id="mesLabel"></div></div></div>
-          <div id="listaAniv"><div class="loading"><div class="spin"></div>Carregando...</div></div>
-        </div>
-      </div>
-
-      <!-- ══ LINK PACIENTE ══ -->
-      <div class="page" id="page-link-paciente">
-        <div class="grid-2">
-          <div class="card">
-            <div class="sec-title" style="margin-bottom:8px">Link de Agendamento + Anamnese</div>
-            <p style="font-size:13px;color:var(--ink3);line-height:1.65;margin-bottom:20px">Envie ao paciente no primeiro contato. Ele escolhe o horário e preenche a ficha de anamnese que prepara o Dr. Igor para o atendimento.</p>
-            <div class="link-box" style="margin-bottom:16px">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--forest-mid)" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-              <span id="linkAgenda">multicare.com.br/agendar</span>
-              <button class="btn btn-outline btn-sm" onclick="copiarLink()">Copiar</button>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <button class="btn btn-wa" onclick="enviarLink()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enviar via WhatsApp</button>
-            </div>
-          </div>
-          <div class="card">
-            <div class="sec-title" style="margin-bottom:16px">Fichas de Anamnese Recebidas</div>
-            <div id="listaAnamnese"><p style="font-size:13px;color:var(--ink3);text-align:center;padding:20px">Nenhuma ficha recebida ainda</p></div>
-          </div>
-        </div>
-      </div>
-
+    <div class="cred-cell">
+      <span class="cred-val" style="font-size:18px;line-height:1.2">Causa<br>Real</span>
+      <span class="cred-label">Tratada, não mascarada</span>
     </div>
   </div>
+
+  <section class="sec sec-gray">
+    <span class="sec-tag">Você se identifica?</span>
+    <h2 class="sec-h2">A dor está <em>redefinindo</em> o que você consegue fazer.</h2>
+    <div class="divider"></div>
+    <p class="sec-lead">Ela não tira só o físico. Vai tomando espaço na sua rotina, na sua confiança, na sua autonomia — até você aceitar limitações que nunca deveriam ser suas.</p>
+    <div class="pain-list">
+      <div class="pain-item"><span class="pain-n">01</span><div><div class="pain-title">Acorda com dor antes do dia começar</div><div class="pain-desc">O corpo já avisa que vai ser difícil — e isso virou normal. Mas não deveria.</div></div></div>
+      <div class="pain-item"><span class="pain-n">02</span><div><div class="pain-title">Perdeu atividades que eram suas</div><div class="pain-desc">Trabalho, esporte, família — tudo ficou condicionado à dor e ao quanto você consegue aguentar.</div></div></div>
+      <div class="pain-item"><span class="pain-n">03</span><div><div class="pain-title">Remédio todo dia, resultado zero</div><div class="pain-desc">Alivia por algumas horas, mas volta. A causa real nunca foi endereçada de verdade.</div></div></div>
+      <div class="pain-item"><span class="pain-n">04</span><div><div class="pain-title">A dependência virou rotina</div><div class="pain-desc">O que era simples virou obstáculo. A autonomia foi embora — silenciosamente.</div></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="metodo">
+    <span class="sec-tag">Como funciona</span>
+    <h2 class="sec-h2">Um protocolo construído <em>para você.</em></h2>
+    <div class="divider"></div>
+    <p class="sec-lead">Não existe tratamento genérico aqui. Cada paciente tem uma história — e o protocolo precisa respeitar isso do início ao fim.</p>
+    <div class="steps">
+      <div class="step"><div class="step-n">01</div><div><div class="step-title">Avaliação aprofundada</div><div class="step-desc">Entendemos sua rotina, seus objetivos e a origem real da dor — não apenas o sintoma que aparece na superfície.</div></div></div>
+      <div class="step"><div class="step-n">02</div><div><div class="step-title">Protocolo personalizado</div><div class="step-desc">Um plano de tratamento desenhado para o seu corpo, a sua agenda e o resultado que você quer alcançar.</div></div></div>
+      <div class="step"><div class="step-n">03</div><div><div class="step-title">Tratamento com técnica e precisão</div><div class="step-desc">Sessões individuais com terapia manual, RPG, eletroterapia e recursos de reabilitação avançada.</div></div></div>
+      <div class="step"><div class="step-n">04</div><div><div class="step-title">Retorno à sua vida completa</div><div class="step-desc">O acompanhamento não para até você recuperar não só a ausência de dor — mas a performance que você merece ter.</div></div></div>
+    </div>
+  </section>
+
+  <section class="sec sec-gray">
+    <span class="sec-tag">Quem vai te atender</span>
+    <h2 class="sec-h2">Dr. Igor Matheus</h2>
+    <div class="divider"></div>
+    <div class="about-row">
+      <div class="about-photo">
+        <img src="data:image/jpeg;base64,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" alt="Dr. Igor Matheus"/>
+      </div>
+      <div>
+        <span class="about-name">Dr. Igor Matheus</span>
+        <span class="about-role">Fisioterapeuta · CREFITO</span>
+        <p class="about-bio">Fisioterapeuta com experiência em reabilitação e tratamento da dor. Atende em clínica própria em Garanhuns, com foco em entender a causa real de cada caso e construir junto ao paciente o caminho de volta para uma vida sem limitações.</p>
+      </div>
+    </div>
+    <div class="tags">
+      <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" class="tag" target="_blank">Terapia Manual</a>
+      <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" class="tag" target="_blank">RPG</a>
+      <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" class="tag" target="_blank">Reabilitação</a>
+      <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" class="tag" target="_blank">Dor Crônica</a>
+      <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" class="tag" target="_blank">Alta Performance</a>
+      <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" class="tag" target="_blank">Clínica Própria</a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <span class="sec-tag">Resultados reais</span>
+    <h2 class="sec-h2">Quem recuperou a vida.</h2>
+    <div class="divider"></div>
+    <div class="test-grid">
+      <div class="test-card"><div class="stars">★★★★★</div><p class="test-text">"Vivia com dor nas costas há 3 anos. Depois do tratamento com o Dr. Igor, voltei a trabalhar e caminhar sem precisar parar a cada 10 minutos."</p><div class="test-sep"></div><span class="test-name">Maria S., 47 anos</span><span class="test-loc">Garanhuns, PE</span></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="test-text">"Pensei que ia precisar de cirurgia. O protocolo foi completamente personalizado para a minha rotina. Não tenho palavras para descrever a diferença."</p><div class="test-sep"></div><span class="test-name">João R., 55 anos</span><span class="test-loc">Garanhuns, PE</span></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="test-text">"Voltei a jogar futebol com meu filho. O Dr. Igor acompanhou do início ao fim — sem largar no meio do caminho. Profissional de verdade."</p><div class="test-sep"></div><span class="test-name">Carlos M., 39 anos</span><span class="test-loc">Garanhuns, PE</span></div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <h2 class="cta-h2">Pronto para recuperar sua vida sem dor?</h2>
+    <p class="cta-sub">Agende sua avaliação agora. Atendimento individual, na sua cidade, com quem trata a causa — não o sintoma.</p>
+    <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" class="btn-cta"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:white;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Falar com Dr. Igor no WhatsApp</a>
+    <span class="cta-note">📍 Garanhuns, PE · (87) 9.9922-1295</span>
+  </section>
+
+  <footer class="footer">
+    <span class="footer-name">Dr. Igor Matheus · Fisioterapia &amp; Reabilitação</span>
+    <a class="footer-ig" href="https://www.instagram.com/multicarefisioterapia/" target="_blank"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;vertical-align:-3px;margin-right:5px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>@multicarefisioterapia</a>
+  </footer>
+
 </div>
-
-<!-- ══ MODALS ══ -->
-
-<!-- Modal Paciente -->
-<div class="modal-overlay" id="modalPaciente">
-  <div class="modal">
-    <div class="modal-head"><span class="modal-title" id="modalPacTitulo">Novo Paciente</span><button class="modal-close" onclick="closeModal('modalPaciente')">×</button></div>
-    <div class="modal-body">
-      <input type="hidden" id="pacId"/>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Nome Completo *</label><input class="form-control" id="pNome" placeholder="Nome do paciente"/></div>
-        <div class="form-group"><label class="form-label">Data de Nascimento</label><input class="form-control" id="pNasc" type="date"/></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">WhatsApp *</label><input class="form-control" id="pTel" placeholder="(87) 9xxxx-xxxx"/></div>
-        <div class="form-group"><label class="form-label">E-mail</label><input class="form-control" id="pEmail" type="email" placeholder="email@exemplo.com"/></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">CPF</label><input class="form-control" id="pCpf" placeholder="000.000.000-00"/></div>
-        <div class="form-group"><label class="form-label">Convênio</label><input class="form-control" id="pConvenio" placeholder="Particular / Nome do plano"/></div>
-      </div>
-      <div class="form-group"><label class="form-label">Observações / Queixa Principal</label><textarea class="form-control" id="pObs" placeholder="Histórico, motivo do atendimento..."></textarea></div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeModal('modalPaciente')">Cancelar</button>
-      <button class="btn btn-green" onclick="salvarPaciente()">Salvar Paciente</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Agendamento -->
-<div class="modal-overlay" id="modalAgendar">
-  <div class="modal">
-    <div class="modal-head"><span class="modal-title" id="modalAgTitulo">Novo Agendamento</span><button class="modal-close" onclick="closeModal('modalAgendar')">×</button></div>
-    <div class="modal-body">
-      <input type="hidden" id="agId"/>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Paciente *</label><select class="form-control" id="agPaciente"><option value="">— Selecione —</option></select></div>
-        <div class="form-group"><label class="form-label">Tipo de Sessão</label><select class="form-control" id="agTipo"><option>Avaliação</option><option>Sessão</option><option>Retorno</option><option>Remarcado</option></select></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Data *</label><input class="form-control" id="agData" type="date"/></div>
-        <div class="form-group"><label class="form-label">Horário *</label><input class="form-control" id="agHora" type="time"/></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Valor (R$)</label><input class="form-control" id="agValor" type="number" placeholder="150"/></div>
-        <div class="form-group"><label class="form-label">Status</label><select class="form-control" id="agStatus"><option>Confirmado</option><option>Pendente</option><option>Cancelado</option><option>Remarcado</option></select></div>
-      </div>
-      <div class="form-group"><label class="form-label">Observações</label><textarea class="form-control" id="agObs" placeholder="Notas..."></textarea></div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeModal('modalAgendar')">Cancelar</button>
-      <button class="btn btn-wa" onclick="salvarAgendar(true)"><svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Salvar + Confirmar WA</button>
-      <button class="btn btn-green" onclick="salvarAgendar(false)">Salvar</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Lançamento -->
-<div class="modal-overlay" id="modalLancamento">
-  <div class="modal" style="max-width:420px">
-    <div class="modal-head"><span class="modal-title">Novo Lançamento</span><button class="modal-close" onclick="closeModal('modalLancamento')">×</button></div>
-    <div class="modal-body">
-      <div class="form-group"><label class="form-label">Paciente</label><select class="form-control" id="lanPac"><option value="">— Selecione —</option></select></div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Tipo</label><select class="form-control" id="lanTipo"><option>Recebido</option><option>A Receber</option><option>Falta Cobrada</option></select></div>
-        <div class="form-group"><label class="form-label">Valor (R$)</label><input class="form-control" id="lanValor" type="number" placeholder="150"/></div>
-      </div>
-      <div class="form-group"><label class="form-label">Data</label><input class="form-control" id="lanData" type="date"/></div>
-      <div class="form-group"><label class="form-label">Descrição</label><input class="form-control" id="lanObs" placeholder="Sessão, avaliação..."/></div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeModal('modalLancamento')">Cancelar</button>
-      <button class="btn btn-green" onclick="salvarLancamento()">Salvar</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Perfil Paciente -->
-<div class="modal-overlay" id="modalPerfil">
-  <div class="modal">
-    <div class="modal-head"><span class="modal-title" id="perfilNome">Paciente</span><button class="modal-close" onclick="closeModal('modalPerfil')">×</button></div>
-    <div class="modal-body" id="perfilBody"></div>
-    <div class="modal-foot" id="perfilFoot"></div>
-  </div>
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
 <script>
-// ══ CONFIG SUPABASE ══
-var SB_URL = 'https://etwozhnvxbqpayxmmnme.supabase.co';
-var SB_KEY = 'sb_publishable_FrJa-XnW0x6rHrmfTYRKsw_I0jI6sWE';
-
-var USERS = [
-  {email:'igor@multicare.com.br',senha:'igor2024',nome:'Dr. Igor Matheus',role:'Fisioterapeuta',initials:'IM'},
-  {email:'gestora@multicare.com.br',senha:'gestora2024',nome:'Gestora',role:'Administração',initials:'GE'}
-];
-
-var state = { pacientes:[], agendamentos:[], lancamentos:[], user:null, weekOffset:0 };
-
-// ══ API ══
-async function api(method, table, body, id){
-  var url = SB_URL+'/rest/v1/'+table;
-  if(id) url += '?id=eq.'+id;
-  var opts = {
-    method: method,
-    headers: {
-      'apikey': SB_KEY,
-      'Authorization': 'Bearer '+SB_KEY,
-      'Content-Type': 'application/json',
-      'Prefer': method==='POST'?'return=representation':'return=representation'
+  function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+  function animateCounter(el) {
+    var target = parseInt(el.dataset.target, 10);
+    var duration = parseInt(el.dataset.duration, 10);
+    var start = performance.now();
+    function tick(now) {
+      var elapsed = now - start;
+      var progress = Math.min(elapsed / duration, 1);
+      el.textContent = Math.round(easeOutQuart(progress) * target);
+      if (progress < 1) requestAnimationFrame(tick);
     }
-  };
-  if(body) opts.body = JSON.stringify(body);
-  var r = await fetch(url, opts);
-  if(!r.ok){ var e=await r.text(); throw new Error(e); }
-  var txt = await r.text();
-  return txt ? JSON.parse(txt) : [];
-}
-async function apiGet(table, params){
-  var url = SB_URL+'/rest/v1/'+table+'?order=id.desc';
-  if(params) url += '&'+params;
-  var r = await fetch(url, {headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
-  if(!r.ok) throw new Error(await r.text());
-  return r.json();
-}
-async function apiDel(table, id){
-  await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id, {method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
-}
-async function apiPatch(table, id, body){
-  var r = await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id, {method:'PATCH',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(body)});
-  return r.json();
-}
-
-async function loadAll(){
-  try{
-    var [p,a,l] = await Promise.all([apiGet('pacientes'),apiGet('agendamentos'),apiGet('lancamentos')]);
-    state.pacientes=p; state.agendamentos=a; state.lancamentos=l;
-  } catch(e){ toast('Erro ao carregar dados: '+e.message,'error'); }
-}
-
-// ══ LOGIN ══
-function toggleEye(inp,ico){
-  var el=document.getElementById(inp);
-  el.type = el.type==='password'?'text':'password';
-  var s=document.getElementById(ico);
-  s.innerHTML = el.type==='text'
-    ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
-    : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
-}
-function quickLogin(e,s){ document.getElementById('loginEmail').value=e; document.getElementById('loginSenha').value=s; }
-function showForgot(){ document.getElementById('loginMainPanel').classList.add('hide'); document.getElementById('forgotPanel').classList.add('show'); }
-function hideForgot(){ document.getElementById('loginMainPanel').classList.remove('hide'); document.getElementById('forgotPanel').classList.remove('show'); }
-function sendForgot(){ document.getElementById('forgotForm').style.display='none'; document.getElementById('forgotSuccess').style.display='block'; }
-
-async function doLogin(){
-  var email=document.getElementById('loginEmail').value.trim().toLowerCase();
-  var senha=document.getElementById('loginSenha').value;
-  var btn=document.getElementById('btnLogin');
-  var spin=document.getElementById('loginSpin');
-  var txt=document.getElementById('loginBtnTxt');
-  var err=document.getElementById('loginError');
-  err.classList.remove('show');
-  if(!email||!senha){ document.getElementById('loginErrorTxt').textContent='Preencha e-mail e senha.'; err.classList.add('show'); return; }
-  btn.disabled=true; spin.style.display='block'; txt.textContent='Verificando...';
-  await new Promise(r=>setTimeout(r,900));
-  var user=USERS.find(u=>u.email===email&&u.senha===senha);
-  if(user){
-    state.user=user;
-    txt.textContent='✓ Acesso confirmado!';
-    await loadAll();
-    setTimeout(()=>{
-      document.getElementById('loginScreen').style.display='none';
-      document.getElementById('appScreen').style.display='flex';
-      document.getElementById('sbAvatar').textContent=user.initials;
-      document.getElementById('sbName').textContent=user.nome;
-      document.getElementById('sbRole').textContent=user.role;
-      initApp();
-    },600);
-  } else {
-    btn.disabled=false; spin.style.display='none'; txt.textContent='Entrar no sistema';
-    document.getElementById('loginErrorTxt').textContent='E-mail ou senha incorretos.';
-    err.classList.add('show');
-    document.getElementById('loginCard').style.animation='shake 0.4s ease';
-    setTimeout(()=>document.getElementById('loginCard').style.animation='',400);
+    requestAnimationFrame(tick);
   }
-}
-
-function doLogout(){
-  state.user=null;
-  document.getElementById('appScreen').style.display='none';
-  document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('loginEmail').value='';
-  document.getElementById('loginSenha').value='';
-  document.getElementById('btnLogin').disabled=false;
-  document.getElementById('loginSpin').style.display='none';
-  document.getElementById('loginBtnTxt').textContent='Entrar no sistema';
-}
-
-// ══ NAVIGATION ══
-function goTo(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  var el=document.getElementById('page-'+page);
-  if(el) el.classList.add('active');
-  var titles={dashboard:'Dashboard',agenda:'Agenda',pacientes:'Pacientes',financeiro:'Financeiro',relatorios:'Relatórios',lembretes:'Lembretes & Mensagens',aniversariantes:'Aniversariantes','link-paciente':'Link do Paciente'};
-  document.getElementById('pageTitle').textContent=titles[page]||page;
-  document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+page+"'"))n.classList.add('active');});
-  closeSidebar();
-  var renders={dashboard:renderDashboard,agenda:renderAgenda,pacientes:renderPacientes,financeiro:renderFinanceiro,relatorios:renderRelatorios,lembretes:renderLembretes,aniversariantes:renderAniversariantes};
-  if(renders[page]) renders[page]();
-  populateSelects();
-}
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlayBg').classList.toggle('open');}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlayBg').classList.remove('open');}
-
-// ══ MODAL ══
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-function populateSelects(){
-  var opts='<option value="">— Selecione —</option>'+state.pacientes.map(p=>`<option value="${p.id}">${p.nome}</option>`).join('');
-  ['agPaciente','selPacientePix','selFalta','lanPac'].forEach(id=>{var el=document.getElementById(id);if(el)el.innerHTML=opts;});
-}
-
-// ══ PACIENTES ══
-async function salvarPaciente(){
-  var nome=document.getElementById('pNome').value.trim();
-  var tel=document.getElementById('pTel').value.trim();
-  if(!nome||!tel){toast('Preencha nome e WhatsApp','error');return;}
-  var body={nome,tel,nasc:document.getElementById('pNasc').value,email:document.getElementById('pEmail').value,cpf:document.getElementById('pCpf').value,convenio:document.getElementById('pConvenio').value,obs:document.getElementById('pObs').value};
-  var pid=document.getElementById('pacId').value;
-  try{
-    if(pid){ await apiPatch('pacientes',pid,body); toast('Paciente atualizado!','success'); }
-    else{ await api('POST','pacientes',body); toast('Paciente cadastrado!','success'); }
-    await loadAll(); closeModal('modalPaciente'); renderPacientes(); renderDashboard();
-    ['pNome','pNasc','pTel','pEmail','pCpf','pConvenio','pObs'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('pacId').value='';
-  } catch(e){toast('Erro: '+e.message,'error');}
-}
-
-function filtrarPacientes(q){
-  var list=q?state.pacientes.filter(p=>p.nome.toLowerCase().includes(q.toLowerCase())||p.tel.includes(q)):state.pacientes;
-  renderTblPacientes(list);
-}
-
-function renderPacientes(){renderTblPacientes(state.pacientes);}
-function renderTblPacientes(list){
-  var tb=document.getElementById('tblPacientes');
-  if(!list.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--ink3);padding:24px">Nenhum paciente cadastrado</td></tr>';return;}
-  tb.innerHTML=list.map(p=>{
-    var prox=state.agendamentos.filter(a=>a.paciente_id==p.id&&a.data>=hoje()).sort((a,b)=>a.data.localeCompare(b.data))[0];
-    var proxStr=prox?prox.data.split('-').reverse().join('/')+' '+prox.hora:'—';
-    return`<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="p-avatar">${p.nome[0]}</div><div><div style="font-weight:500">${p.nome}</div><div style="font-size:11px;color:var(--ink3)">${p.email||''}</div></div></div></td><td>${p.tel}</td><td>${p.nasc?p.nasc.split('-').reverse().join('/'):'—'}</td><td>${p.convenio||'Particular'}</td><td>${proxStr}</td><td><div style="display:flex;gap:5px;flex-wrap:wrap"><button class="btn btn-outline btn-sm" onclick="verPerfil(${p.id})">Ver</button><button class="btn btn-outline btn-sm" onclick="editarPaciente(${p.id})">Editar</button><button class="btn btn-wa btn-sm" onclick="waMsg('${p.tel}','Olá ${p.nome}!')">WA</button><button class="btn btn-red btn-sm" onclick="excluirPaciente(${p.id})">✕</button></div></td></tr>`;
-  }).join('');
-}
-
-function editarPaciente(id){
-  var p=state.pacientes.find(x=>x.id==id);if(!p)return;
-  document.getElementById('pacId').value=p.id;
-  document.getElementById('pNome').value=p.nome||'';
-  document.getElementById('pNasc').value=p.nasc||'';
-  document.getElementById('pTel').value=p.tel||'';
-  document.getElementById('pEmail').value=p.email||'';
-  document.getElementById('pCpf').value=p.cpf||'';
-  document.getElementById('pConvenio').value=p.convenio||'';
-  document.getElementById('pObs').value=p.obs||'';
-  document.getElementById('modalPacTitulo').textContent='Editar Paciente';
-  openModal('modalPaciente');
-}
-
-function verPerfil(id){
-  var p=state.pacientes.find(x=>x.id==id);if(!p)return;
-  var ags=state.agendamentos.filter(a=>a.paciente_id==id);
-  var total=ags.length;
-  var confirmd=ags.filter(a=>a.status=='Confirmado').length;
-  document.getElementById('perfilNome').textContent=p.nome;
-  document.getElementById('perfilBody').innerHTML=`
-    <div class="form-row" style="margin-bottom:14px">
-      <div><div class="form-label">WhatsApp</div><div style="font-size:14px">${p.tel}</div></div>
-      <div><div class="form-label">Nascimento</div><div style="font-size:14px">${p.nasc?p.nasc.split('-').reverse().join('/'):'—'}</div></div>
-    </div>
-    <div class="form-row" style="margin-bottom:14px">
-      <div><div class="form-label">CPF</div><div style="font-size:14px">${p.cpf||'—'}</div></div>
-      <div><div class="form-label">Convênio</div><div style="font-size:14px">${p.convenio||'Particular'}</div></div>
-    </div>
-    ${p.obs?`<div style="margin-bottom:16px"><div class="form-label">Observações</div><div style="font-size:13px;color:var(--ink2);line-height:1.6;background:var(--paper);padding:10px;border-radius:6px">${p.obs}</div></div>`:''}
-    <div style="display:flex;gap:16px;margin-bottom:16px">
-      <div class="card" style="flex:1;padding:14px;text-align:center"><div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--forest)">${total}</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">Total Sessões</div></div>
-      <div class="card" style="flex:1;padding:14px;text-align:center"><div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--blue)">${confirmd}</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">Confirmadas</div></div>
-    </div>
-    <div class="form-label" style="margin-bottom:8px">Histórico de Sessões</div>
-    ${ags.length?ags.sort((a,b)=>b.data.localeCompare(a.data)).slice(0,8).map(a=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px"><span>${a.data?a.data.split('-').reverse().join('/'):'—'} ${a.hora||''} — ${a.tipo||''}</span><span class="badge ${a.status=='Confirmado'?'badge-green':a.status=='Cancelado'||a.status=='Falta'?'badge-red':'badge-amber'}">${a.status||''}</span></div>`).join(''):'<p style="font-size:13px;color:var(--ink3)">Nenhuma sessão registrada</p>'}
-  `;
-  document.getElementById('perfilFoot').innerHTML=`
-    <button class="btn btn-wa" onclick="waMsg('${p.tel}','Olá ${p.nome}! Dr. Igor aqui, da MultiCare Fisioterapia.')">WhatsApp</button>
-    <button class="btn btn-outline" onclick="closeModal('modalPerfil');editarPaciente(${id})">Editar</button>
-    <button class="btn btn-green" onclick="closeModal('modalPerfil');document.getElementById('agPaciente').value=${id};openModal('modalAgendar')">Agendar</button>
-  `;
-  openModal('modalPerfil');
-}
-
-async function excluirPaciente(id){
-  if(!confirm('Excluir este paciente e todos os seus dados?'))return;
-  try{await apiDel('pacientes',id);await loadAll();renderPacientes();renderDashboard();toast('Paciente excluído','success');}
-  catch(e){toast('Erro: '+e.message,'error');}
-}
-
-// ══ AGENDAMENTO ══
-async function salvarAgendar(sendWa){
-  var pid=document.getElementById('agPaciente').value;
-  var data=document.getElementById('agData').value;
-  var hora=document.getElementById('agHora').value;
-  if(!pid||!data||!hora){toast('Preencha paciente, data e horário','error');return;}
-  var body={paciente_id:parseInt(pid),tipo:document.getElementById('agTipo').value,data,hora,valor:parseFloat(document.getElementById('agValor').value)||0,status:document.getElementById('agStatus').value,obs:document.getElementById('agObs').value};
-  var aid=document.getElementById('agId').value;
-  try{
-    if(aid){await apiPatch('agendamentos',aid,body);toast('Agendamento atualizado!','success');}
-    else{await api('POST','agendamentos',body);toast('Agendamento salvo!','success');}
-    await loadAll();closeModal('modalAgendar');renderAgenda();renderDashboard();
-    document.getElementById('agId').value='';
-    ['agData','agHora','agValor','agObs'].forEach(id=>document.getElementById(id).value='');
-    if(sendWa){
-      var p=state.pacientes.find(x=>x.id==pid);
-      if(p){var df=data.split('-').reverse().join('/');waMsg(p.tel,`Olá ${p.nome}! Sua ${body.tipo.toLowerCase()} com Dr. Igor Matheus está confirmada para ${df} às ${hora}h — MultiCare Fisioterapia, Garanhuns. Qualquer dúvida estou à disposição!`);}
+  var section = document.getElementById("creds-section");
+  var fired = false;
+  var observer = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting && !fired) {
+      fired = true;
+      document.querySelectorAll(".counter").forEach(function(el) { animateCounter(el); });
     }
-  } catch(e){toast('Erro: '+e.message,'error');}
-}
-
-// ══ AGENDA VISUAL ══
-function renderAgenda(){
-  var grid=document.getElementById('agendaGrid');
-  var today=new Date();
-  today.setDate(today.getDate()+state.weekOffset*7);
-  var mon=new Date(today);mon.setDate(today.getDate()-((today.getDay()+6)%7));
-  var days=[];for(var i=0;i<6;i++){var d=new Date(mon);d.setDate(mon.getDate()+i);days.push(d);}
-  var todayStr=hoje();
-  var ds=d=>d.toISOString().split('T')[0];
-  document.getElementById('weekLabel').textContent=mon.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'})+' – '+days[5].toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'});
-  var hours=['07:00','08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00','18:00'];
-  var dnames=['Seg','Ter','Qua','Qui','Sex','Sáb'];
-  var html='<div class="ag-head"></div>';
-  days.forEach((d,i)=>{
-    var isToday=ds(d)===todayStr;
-    html+=`<div class="ag-head${i>=3?' ag-col-hide':''}${isToday?' today':''}">${dnames[i]}<br><small style="font-weight:400">${d.getDate()}/${d.getMonth()+1}</small></div>`;
-  });
-  hours.forEach(h=>{
-    html+=`<div class="ag-time">${h}</div>`;
-    days.forEach((d,di)=>{
-      var dateStr=ds(d);
-      var isToday=dateStr===todayStr;
-      var evs=state.agendamentos.filter(a=>a.data===dateStr&&a.hora===h);
-      var cls=(di>=3?' ag-col-hide':'')+(isToday?' today-col':'');
-      html+=`<div class="ag-slot${cls}" onclick="openSlot('${dateStr}','${h}')">`;
-      evs.forEach(a=>{
-        var p=state.pacientes.find(x=>x.id==a.paciente_id);
-        var ec=a.status==='Cancelado'?'ag-event-red':a.tipo==='Avaliação'?'ag-event-blue':a.tipo==='Remarcado'?'ag-event-amber':'ag-event';
-        html+=`<div class="${ec}" onclick="event.stopPropagation();editarAgendamento(${a.id})" title="${p?p.nome:''} — ${a.tipo}">${p?p.nome.split(' ')[0]:'?'}<br>${a.tipo}</div>`;
-      });
-      html+='</div>';
-    });
-  });
-  grid.innerHTML=html;
-}
-function weekChange(d){state.weekOffset+=d;renderAgenda();}
-function openSlot(data,hora){
-  document.getElementById('agId').value='';
-  document.getElementById('modalAgTitulo').textContent='Novo Agendamento';
-  document.getElementById('agData').value=data;
-  document.getElementById('agHora').value=hora;
-  document.getElementById('agStatus').value='Confirmado';
-  populateSelects();openModal('modalAgendar');
-}
-function editarAgendamento(id){
-  var a=state.agendamentos.find(x=>x.id==id);if(!a)return;
-  document.getElementById('agId').value=a.id;
-  document.getElementById('modalAgTitulo').textContent='Editar Agendamento';
-  document.getElementById('agPaciente').value=a.paciente_id;
-  document.getElementById('agTipo').value=a.tipo;
-  document.getElementById('agData').value=a.data;
-  document.getElementById('agHora').value=a.hora;
-  document.getElementById('agValor').value=a.valor;
-  document.getElementById('agStatus').value=a.status;
-  document.getElementById('agObs').value=a.obs||'';
-  populateSelects();
-  document.getElementById('agPaciente').value=a.paciente_id;
-  openModal('modalAgendar');
-}
-
-// ══ FINANCEIRO ══
-async function salvarLancamento(){
-  var val=parseFloat(document.getElementById('lanValor').value)||0;
-  var body={paciente_id:parseInt(document.getElementById('lanPac').value)||null,tipo:document.getElementById('lanTipo').value,valor:val,data:document.getElementById('lanData').value,obs:document.getElementById('lanObs').value};
-  try{await api('POST','lancamentos',body);await loadAll();closeModal('modalLancamento');renderFinanceiro();toast('Lançamento salvo!','success');}
-  catch(e){toast('Erro: '+e.message,'error');}
-}
-
-function renderFinanceiro(){
-  var rec=state.lancamentos.filter(l=>l.tipo==='Recebido').reduce((s,l)=>s+parseFloat(l.valor||0),0);
-  var pend=state.lancamentos.filter(l=>l.tipo==='A Receber').reduce((s,l)=>s+parseFloat(l.valor||0),0);
-  var falt=state.lancamentos.filter(l=>l.tipo==='Falta Cobrada').reduce((s,l)=>s+parseFloat(l.valor||0),0);
-  document.getElementById('fRecebido').textContent='R$ '+rec.toFixed(2).replace('.',',');
-  document.getElementById('fAReceber').textContent='R$ '+pend.toFixed(2).replace('.',',');
-  document.getElementById('fFaltas').textContent='R$ '+falt.toFixed(2).replace('.',',');
-  var el=document.getElementById('listaLancamentos');
-  if(!state.lancamentos.length){el.innerHTML='<p style="text-align:center;color:var(--ink3);font-size:13px;padding:20px">Nenhum lançamento</p>';return;}
-  el.innerHTML=state.lancamentos.slice(0,12).map(l=>{
-    var p=state.pacientes.find(x=>x.id==l.paciente_id);
-    var cor=l.tipo==='Recebido'?'style="color:var(--forest)"':l.tipo==='Falta Cobrada'?'style="color:var(--red)"':'';
-    return`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><div><div style="font-size:13px;font-weight:500">${p?p.nome:'—'}</div><div style="font-size:11px;color:var(--ink3)">${l.data?l.data.split('-').reverse().join('/'):'—'} · ${l.obs||l.tipo}</div></div><div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700 ${cor}">R$ ${parseFloat(l.valor||0).toFixed(2).replace('.',',')}</div></div>`;
-  }).join('');
-  populateSelects();
-}
-
-function enviarPix(){
-  var pid=document.getElementById('selPacientePix').value;
-  if(!pid){toast('Selecione um paciente','error');return;}
-  var p=state.pacientes.find(x=>x.id==pid);if(!p)return;
-  waMsg(p.tel,document.getElementById('msgPix').value);
-}
-
-// ══ DASHBOARD ══
-function renderDashboard(){
-  var todayStr=hoje();
-  var todaySess=state.agendamentos.filter(a=>a.data===todayStr);
-  document.getElementById('dConsultasHoje').textContent=todaySess.length;
-  document.getElementById('dPacientes').textContent=state.pacientes.length;
-  var mes=new Date().getMonth();var ano=new Date().getFullYear();
-  var recMes=state.lancamentos.filter(l=>l.tipo==='Recebido'&&l.data&&new Date(l.data).getMonth()===mes&&new Date(l.data).getFullYear()===ano).reduce((s,l)=>s+parseFloat(l.valor||0),0);
-  document.getElementById('dReceita').textContent='R$'+Math.round(recMes);
-  var faltasMes=state.lancamentos.filter(l=>l.tipo==='Falta Cobrada'&&l.data&&new Date(l.data).getMonth()===mes).length;
-  document.getElementById('dFaltas').textContent=faltasMes;
-  // Próximas
-  var prox=state.agendamentos.filter(a=>a.data>=todayStr).sort((a,b)=>a.data.localeCompare(b.data)||a.hora.localeCompare(b.hora)).slice(0,5);
-  var elP=document.getElementById('dProximas');
-  elP.innerHTML=prox.length?prox.map(a=>{var p=state.pacientes.find(x=>x.id==a.paciente_id);return`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)"><div class="p-avatar">${p?p.nome[0]:'?'}</div><div style="flex:1"><div style="font-size:13px;font-weight:500">${p?p.nome:'—'}</div><div style="font-size:11px;color:var(--ink3)">${a.data?a.data.split('-').reverse().join('/'):'—'} ${a.hora||''} · ${a.tipo||''}</div></div><span class="badge ${a.status==='Confirmado'?'badge-green':a.status==='Cancelado'?'badge-red':'badge-amber'}">${a.status||''}</span></div>`;}).join(''):'<p style="font-size:13px;color:var(--ink3);text-align:center;padding:20px 0">Nenhuma sessão agendada</p>';
-  // Lembretes 24h
-  var am=new Date();am.setDate(am.getDate()+1);var amStr=am.toISOString().split('T')[0];
-  var lem=state.agendamentos.filter(a=>a.data===amStr);
-  var elL=document.getElementById('dLembretes');
-  elL.innerHTML=lem.length?lem.map(a=>{var p=state.pacientes.find(x=>x.id==a.paciente_id);return`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)"><div style="flex:1"><div style="font-size:13px;font-weight:500">${p?p.nome:'—'} · ${a.hora||''}</div><div style="font-size:11px;color:var(--ink3)">${a.tipo||''}</div></div><button class="btn btn-wa btn-sm" onclick="waMsg('${p?p.tel:''}','Olá ${p?p.nome:''}! Lembrando da sua sessão amanhã ${amStr.split('-').reverse().join('/')} às ${a.hora}h com Dr. Igor — MultiCare. Confirma presença?')">Lembrete WA</button></div>`;}).join(''):'<p style="font-size:13px;color:var(--ink3);text-align:center;padding:20px 0">Nenhuma sessão amanhã</p>';
-  // Aniversariantes
-  var mesN=new Date().getMonth()+1;
-  var anivs=state.pacientes.filter(p=>p.nasc&&parseInt(p.nasc.split('-')[1])===mesN);
-  var elA=document.getElementById('dAniversariantes');
-  elA.innerHTML=anivs.length?`<div style="display:flex;flex-wrap:wrap;gap:12px">${anivs.map(p=>`<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--paper);border-radius:8px;flex:1;min-width:200px"><span style="font-size:20px">🎂</span><div style="flex:1"><div style="font-size:13px;font-weight:500">${p.nome}</div><div style="font-size:11px;color:var(--ink3)">Dia ${p.nasc.split('-')[2]}</div></div><button class="btn btn-wa btn-sm" onclick="waMsg('${p.tel}','🎉 Feliz Aniversário, ${p.nome}! Dr. Igor e a equipe MultiCare desejam um dia incrível e muita saúde! 💚')">WA</button></div>`).join('')}</div>`:'<p style="font-size:13px;color:var(--ink3);text-align:center;padding:20px 0">Nenhum aniversariante este mês</p>';
-}
-
-// ══ RELATÓRIOS ══
-function renderRelatorios(){
-  var total=state.pacientes.length;
-  var totalAg=state.agendamentos.length;
-  var totalRec=state.lancamentos.filter(l=>l.tipo==='Recebido').reduce((s,l)=>s+parseFloat(l.valor||0),0);
-  var confirm=state.agendamentos.filter(a=>a.status==='Confirmado').length;
-  var taxa=totalAg?Math.round(confirm/totalAg*100):0;
-  document.getElementById('relTotalPac').textContent=total;
-  document.getElementById('relTotalAg').textContent=totalAg;
-  document.getElementById('relTotalRec').textContent='R$'+Math.round(totalRec);
-  document.getElementById('relTaxaComp').textContent=taxa+'%';
-  // Tipos
-  var tipos={};state.agendamentos.forEach(a=>{tipos[a.tipo]=(tipos[a.tipo]||0)+1;});
-  document.getElementById('relTipos').innerHTML=Object.entries(tipos).map(([k,v])=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>${k}</span><strong>${v}</strong></div><div class="progress-bar"><div class="progress-fill" style="width:${Math.round(v/totalAg*100)||0}%"></div></div></div>`).join('')||'<p style="font-size:13px;color:var(--ink3)">Nenhum dado</p>';
-  // Status
-  var statuses={};state.agendamentos.forEach(a=>{statuses[a.status]=(statuses[a.status]||0)+1;});
-  var statusColors={'Confirmado':'var(--forest-mid)','Pendente':'var(--amber)','Cancelado':'var(--red)','Remarcado':'var(--blue)'};
-  document.getElementById('relStatus').innerHTML=Object.entries(statuses).map(([k,v])=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px"><span style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:${statusColors[k]||'var(--ink3)'};display:inline-block"></span>${k}</span><strong>${v}</strong></div>`).join('')||'<p style="font-size:13px;color:var(--ink3)">Nenhum dado</p>';
-  renderRelPacientes();renderRelAgendamentos();renderRelFinanceiro();
-}
-
-function renderRelPacientes(){
-  var q=(document.getElementById('relBuscaPac')||{}).value||'';
-  var mes=new Date().getMonth();var ano=new Date().getFullYear();
-  var mesN=new Date().getMonth()+1;
-  document.getElementById('relPacAtivos').textContent=state.pacientes.length;
-  document.getElementById('relPacMes').textContent=state.pacientes.filter(p=>p.created_at&&new Date(p.created_at).getMonth()===mes&&new Date(p.created_at).getFullYear()===ano).length;
-  document.getElementById('relPacAniv').textContent=state.pacientes.filter(p=>p.nasc&&parseInt(p.nasc.split('-')[1])===mesN).length;
-  var list=q?state.pacientes.filter(p=>p.nome.toLowerCase().includes(q.toLowerCase())):state.pacientes;
-  document.getElementById('relTblPac').innerHTML=list.map(p=>{
-    var ags=state.agendamentos.filter(a=>a.paciente_id==p.id);
-    var ultimo=ags.sort((a,b)=>b.data.localeCompare(a.data))[0];
-    return`<tr><td><div style="font-weight:500">${p.nome}</div></td><td>${p.tel}</td><td>${p.nasc?p.nasc.split('-').reverse().join('/'):'—'}</td><td>${p.convenio||'Particular'}</td><td style="text-align:center">${ags.length}</td><td>${ultimo?ultimo.data.split('-').reverse().join('/'):'—'}</td></tr>`;
-  }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--ink3);padding:20px">Nenhum paciente</td></tr>';
-}
-
-function renderRelAgendamentos(){
-  var filtroStatus=(document.getElementById('relFiltroStatus')||{}).value||'';
-  var filtroMes=(document.getElementById('relFiltroMes')||{}).value||'';
-  var mes=new Date().getMonth();var ano=new Date().getFullYear();
-  var agMes=state.agendamentos.filter(a=>a.data&&new Date(a.data.replace(/-/g,'/')).getMonth()===mes&&new Date(a.data.replace(/-/g,'/')).getFullYear()===ano);
-  document.getElementById('relAgMes').textContent=agMes.length;
-  document.getElementById('relAgFaltas').textContent=state.agendamentos.filter(a=>a.status==='Cancelado').length;
-  document.getElementById('relAgRemarcacoes').textContent=state.agendamentos.filter(a=>a.tipo==='Remarcado').length;
-  var list=state.agendamentos;
-  if(filtroStatus) list=list.filter(a=>a.status===filtroStatus);
-  if(filtroMes) list=list.filter(a=>a.data&&a.data.startsWith(filtroMes));
-  list=list.sort((a,b)=>b.data.localeCompare(a.data));
-  document.getElementById('relTblAg').innerHTML=list.map(a=>{
-    var p=state.pacientes.find(x=>x.id==a.paciente_id);
-    return`<tr><td>${p?p.nome:'—'}</td><td>${a.data?a.data.split('-').reverse().join('/'):'—'}</td><td>${a.hora||'—'}</td><td>${a.tipo||'—'}</td><td><span class="badge ${a.status==='Confirmado'?'badge-green':a.status==='Cancelado'?'badge-red':a.status==='Remarcado'?'badge-blue':'badge-amber'}">${a.status||'—'}</span></td><td>R$ ${parseFloat(a.valor||0).toFixed(2).replace('.',',')}</td></tr>`;
-  }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--ink3);padding:20px">Nenhum agendamento</td></tr>';
-}
-
-function renderRelFinanceiro(){
-  var filtro=(document.getElementById('relFiltroLan')||{}).value||'';
-  var rec=state.lancamentos.filter(l=>l.tipo==='Recebido').reduce((s,l)=>s+parseFloat(l.valor||0),0);
-  var pend=state.lancamentos.filter(l=>l.tipo==='A Receber').reduce((s,l)=>s+parseFloat(l.valor||0),0);
-  var falt=state.lancamentos.filter(l=>l.tipo==='Falta Cobrada').reduce((s,l)=>s+parseFloat(l.valor||0),0);
-  document.getElementById('relFinRec').textContent='R$'+Math.round(rec);
-  document.getElementById('relFinPend').textContent='R$'+Math.round(pend);
-  document.getElementById('relFinFalta').textContent='R$'+Math.round(falt);
-  document.getElementById('relFinTotal').textContent='R$'+Math.round(rec+pend+falt);
-  var list=filtro?state.lancamentos.filter(l=>l.tipo===filtro):state.lancamentos;
-  list=list.sort((a,b)=>(b.data||'').localeCompare(a.data||''));
-  document.getElementById('relTblLan').innerHTML=list.map(l=>{
-    var p=state.pacientes.find(x=>x.id==l.paciente_id);
-    var cor=l.tipo==='Recebido'?'color:var(--forest)':l.tipo==='Falta Cobrada'?'color:var(--red)':'';
-    return`<tr><td>${l.data?l.data.split('-').reverse().join('/'):'—'}</td><td>${p?p.nome:'—'}</td><td><span class="badge ${l.tipo==='Recebido'?'badge-green':l.tipo==='Falta Cobrada'?'badge-red':'badge-amber'}">${l.tipo||'—'}</span></td><td>${l.obs||'—'}</td><td style="${cor};font-weight:600">R$ ${parseFloat(l.valor||0).toFixed(2).replace('.',',')}</td></tr>`;
-  }).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--ink3);padding:20px">Nenhum lançamento</td></tr>';
-}
-
-// ══ LEMBRETES ══
-function renderLembretes(){
-  var am=new Date();am.setDate(am.getDate()+1);var amStr=am.toISOString().split('T')[0];
-  var lem=state.agendamentos.filter(a=>a.data===amStr);
-  var el=document.getElementById('lista24h');
-  el.innerHTML=lem.length?lem.map(a=>{var p=state.pacientes.find(x=>x.id==a.paciente_id);return`<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)"><div><div style="font-size:13px;font-weight:500">${p?p.nome:'—'} · ${a.hora||''}</div><div style="font-size:11px;color:var(--ink3)">${a.tipo||''}</div></div><button class="btn btn-wa btn-sm" onclick="waMsg('${p?p.tel:''}','Olá ${p?p.nome:''}! Lembrando da sua sessão amanhã ${amStr.split('-').reverse().join('/')} às ${a.hora}h com Dr. Igor Matheus — MultiCare Fisioterapia. Confirma presença? Em caso de cancelamento, avise com antecedência. Obrigado!')">Lembrete WA</button></div>`;}).join(''):'<p style="font-size:13px;color:var(--ink3);text-align:center;padding:24px">Nenhuma sessão amanhã</p>';
-  populateSelects();
-}
-
-// ══ ANIVERSARIANTES ══
-function renderAniversariantes(){
-  var meses=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  var mes=new Date().getMonth();
-  document.getElementById('mesLabel').textContent=meses[mes];
-  var b=state.pacientes.filter(p=>p.nasc&&parseInt(p.nasc.split('-')[1])===mes+1).sort((a,b)=>parseInt(a.nasc.split('-')[2])-parseInt(b.nasc.split('-')[2]));
-  document.getElementById('listaAniv').innerHTML=b.length?b.map(p=>`<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)"><span style="font-size:22px">🎂</span><div style="flex:1"><div style="font-size:14px;font-weight:500">${p.nome}</div><div style="font-size:12px;color:var(--ink3)">Dia ${p.nasc.split('-')[2]} · ${p.tel}</div></div><button class="btn btn-wa btn-sm" onclick="waMsg('${p.tel}','🎉 Feliz Aniversário, ${p.nome}! Dr. Igor e a equipe MultiCare desejam um dia especial e muita saúde! 💚')">Parabéns WA</button></div>`).join(''):'<p style="font-size:13px;color:var(--ink3);text-align:center;padding:24px">Nenhum aniversariante cadastrado para este mês</p>';
-}
-
-// ══ MENSAGENS ══
-function enviarParaTodos(tipo){
-  if(!state.pacientes.length){toast('Nenhum paciente cadastrado','error');return;}
-  var msg=tipo==='natal'?document.getElementById('msgNatal').value:document.getElementById('msgAnoNovo').value;
-  state.pacientes.forEach((p,i)=>setTimeout(()=>waMsg(p.tel,msg),i*1000));
-  toast('Abrindo WhatsApp para cada paciente...','success');
-}
-function enviarFalta(){
-  var pid=document.getElementById('selFalta').value;
-  if(!pid){toast('Selecione um paciente','error');return;}
-  var p=state.pacientes.find(x=>x.id==pid);if(!p)return;
-  waMsg(p.tel,document.getElementById('msgFalta').value);
-}
-function enviarLink(){
-  waMsg('5587999221295',`Olá! Dr. Igor Matheus aqui da MultiCare Fisioterapia. Acesse o link para agendar sua consulta e preencher uma breve ficha: ${document.getElementById('linkAgenda').textContent}`);
-}
-
-// ══ UTILS ══
-function waMsg(tel,msg){
-  var num=tel.replace(/\D/g,'');
-  if(num.length<=11)num='55'+num;
-  window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank');
-}
-function copiarLink(){navigator.clipboard.writeText(document.getElementById('linkAgenda').textContent).then(()=>toast('Link copiado!','success'));}
-function hoje(){return new Date().toISOString().split('T')[0];}
-function switchTab(el,panelId){
-  el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.parentElement.nextElementSibling&&el.parentElement.nextElementSibling.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p=>{if(p.id===panelId)p.classList.add('active');});
-  el.classList.add('active');
-}
-function toast(msg,type){
-  var el=document.getElementById('toast');
-  el.textContent=msg;el.className='toast '+(type||'');
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),3000);
-}
-
-// ══ INIT ══
-function initApp(){
-  var now=new Date();
-  document.getElementById('todayDate').textContent=now.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
-  document.getElementById('agData').value=hoje();
-  document.getElementById('lanData').value=hoje();
-  var mesInput=document.getElementById('relFiltroMes');
-  if(mesInput)mesInput.value=hoje().substring(0,7);
-  renderDashboard();renderAgenda();populateSelects();
-}
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginScreen').style.display!=='none')doLogin();});
+  }, { threshold: 0.3 });
+  observer.observe(section);
 </script>
+
+
+
+<div class="float-btns">
+  <a href="https://wa.me/5587999221295?text=Ol%C3%A1%20Dr.%20Igor%2C%20vim%20pelo%20site%20e%20quero%20agendar%20minha%20consulta!" target="_blank" class="float-btn float-btn-wa" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" style="width:26px;height:26px;fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
 </body>
 </html>
